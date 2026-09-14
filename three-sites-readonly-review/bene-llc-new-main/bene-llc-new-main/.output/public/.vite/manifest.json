@@ -10,19 +10,19 @@
     "file": "_next/static/chunks/rolldown-runtime-C60lm6uB.js",
     "name": "rolldown-runtime"
   },
-  "_vinext-B2rvgb64.js": {
-    "file": "_next/static/chunks/vinext-B2rvgb64.js",
+  "_vinext-kpNALs7n.js": {
+    "file": "_next/static/chunks/vinext-kpNALs7n.js",
     "name": "vinext",
     "imports": [
       "_rolldown-runtime-C60lm6uB.js",
       "_framework-BCvMtQzT.js"
     ],
     "dynamicImports": [
-      "_vinext-B2rvgb64.js"
+      "_vinext-kpNALs7n.js"
     ]
   },
   "app/site.tsx": {
-    "file": "_next/static/chunks/site-C_8IZVZQ.js",
+    "file": "_next/static/chunks/site-DVz5pB7k.js",
     "name": "site",
     "src": "app/site.tsx",
     "isDynamicEntry": true,
@@ -46,7 +46,7 @@
     ]
   },
   "components/SiteHeader.tsx": {
-    "file": "_next/static/chunks/SiteHeader-BXJ1EcKr.js",
+    "file": "_next/static/chunks/SiteHeader-BphNoe_K.js",
     "name": "SiteHeader",
     "src": "components/SiteHeader.tsx",
     "isDynamicEntry": true,
@@ -56,28 +56,28 @@
     ]
   },
   "node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "_next/static/chunks/layout-segment-context-BqGpMPzd.js",
+    "file": "_next/static/chunks/layout-segment-context-DoGf2RGy.js",
     "name": "layout-segment-context",
     "src": "node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
     "imports": [
       "_rolldown-runtime-C60lm6uB.js",
-      "_vinext-B2rvgb64.js",
+      "_vinext-kpNALs7n.js",
       "_framework-BCvMtQzT.js"
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "_next/static/chunks/index-C5zAc1bj.js",
+    "file": "_next/static/chunks/index-bGnnL2Lf.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
     "imports": [
       "_rolldown-runtime-C60lm6uB.js",
-      "_vinext-B2rvgb64.js",
+      "_vinext-kpNALs7n.js",
       "_framework-BCvMtQzT.js"
     ],
     "dynamicImports": [
-      "_vinext-B2rvgb64.js",
+      "_vinext-kpNALs7n.js",
       "node_modules/vinext/dist/shims/layout-segment-context.js",
       "components/SiteHeader.tsx",
       "app/site.tsx",
