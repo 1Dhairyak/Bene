@@ -4,11 +4,30 @@ import { descriptorFor, divisions } from '@/lib/divisions';
 
 type Link = { href: string; label: string };
 
+const stripLabel: Record<string, string> = { construction: 'Construction & Interiors', trading: 'Global Commodities' };
+
 export default function SiteHeader({ division, sub, links, cta }: { division: string; sub?: string; links: Link[]; cta: Link }) {
   const [open, setOpen] = useState(false);
   const header = useRef<HTMLElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const lines = descriptorFor(division, sub);
+
+  // Hover strip under the logo descriptor for switching divisions.
+  const [strip, setStrip] = useState(false);
+  const stripTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const touchTap = useRef(false);
+  const keepStrip = () => clearTimeout(stripTimer.current);
+  const showStrip = () => { keepStrip(); setStrip(true); };
+  const hideStrip = () => { keepStrip(); stripTimer.current = setTimeout(() => setStrip(false), 220); };
+
+  useEffect(() => {
+    if (!strip) return;
+    const onDown = (e: PointerEvent) => { if (!(e.target as Element).closest?.('.brand-wrap')) setStrip(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setStrip(false); };
+    addEventListener('pointerdown', onDown);
+    addEventListener('keydown', onKey);
+    return () => { removeEventListener('pointerdown', onDown); removeEventListener('keydown', onKey); };
+  }, [strip]);
 
   useEffect(() => {
     if (!open) return;
@@ -22,10 +41,26 @@ export default function SiteHeader({ division, sub, links, cta }: { division: st
   return (
     <header ref={header} className={'nav' + (open ? ' menu-open' : '')}>
       <div className="shell nav-inner">
-        <a className="brand" href="/" aria-label={'Bene LLC — ' + lines.join(' ').toLowerCase()}>
-          bene<span className="brand-dot" />
-          <small className="brand-descriptor">{lines.map(l => <span key={l}>{l}</span>)}</small>
-        </a>
+        <div className="brand-wrap" onPointerLeave={e => { if (e.pointerType === 'mouse') hideStrip(); }} onPointerEnter={keepStrip}>
+          <a className="brand" href="/" aria-label={'Bene LLC — ' + lines.join(' ').toLowerCase()}>
+            bene<span className="brand-dot" />
+            <small
+              className="brand-descriptor"
+              onPointerEnter={e => { if (e.pointerType === 'mouse') showStrip(); }}
+              onPointerDown={e => { touchTap.current = e.pointerType !== 'mouse'; }}
+              onClick={e => { if (touchTap.current && !strip) { e.preventDefault(); showStrip(); } }}
+            >
+              {lines.map(l => <span key={l}>{l}</span>)}
+            </small>
+          </a>
+          <nav className={'division-strip' + (strip ? ' is-open' : '')} aria-label="Switch division" aria-hidden={!strip}>
+            {divisions.map(d => (
+              <a key={d.slug} href={d.href} tabIndex={strip ? undefined : -1} className={d.slug === division ? 'is-current' : undefined} aria-current={d.slug === division ? 'true' : undefined}>
+                {stripLabel[d.slug] ?? d.short}
+              </a>
+            ))}
+          </nav>
+        </div>
         <nav className="navlinks" aria-label="Main navigation">
           <button ref={trigger} type="button" className="divisions-trigger" aria-expanded={open} aria-controls="divisions-menu" onClick={() => setOpen(o => !o)}>
             Divisions <span aria-hidden="true">{open ? '−' : '+'}</span>
